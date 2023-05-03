@@ -122,11 +122,30 @@ dataListButton.innerHTML = /* html */ [
 // data-settings-form.submit() { actions.settings.submit }
 // data-list-close.click() { data-list-active.open === false }
 
+
+/**
+ * 
+ * 
+ * 
+ * I think the code should look like this.
+ * If the looks like this means that the button rn is used to display text number, every click will decrease the number by 36.
+ * which makes sense because everytime you load 36 books bluh  bluh......
+ * 
+ * dataListButton.addEventListener("click", () => {
+ *   dataListButton.inner = appendChild( createPreviewsFragment( matches - page * BOOKS_PER_PAGE + page + 1 * BOOKS_PER_PAGE
+ *   actions.list.updateRemaining() //have not made sense of this  
+ * page = page + 1
+ *})
+ */
+
 dataListButton.addEventListener("click", () => {
-    dataListItems.appendChild(createPreviewsFragment(matches, page * BOOKS_PER_PAGE, page + 1 *[BOOKS_PER_PAGE])) 
-    actions.list.updateRemaining() //have no made sense of this
+    dataListItems.appendChild(/* createPreviewsFragment( */matches - page * BOOKS_PER_PAGE + page + 1 * BOOKS_PER_PAGE/* ) */) /*=== 1348 */
+    actions.list.updateRemaining() //have not made sense of this  
     page = page + 1
 })
+
+
+
 
 // data-header-search.click() {
 //     data-search-overlay.open === true ;
@@ -240,7 +259,7 @@ dataListButton.addEventListener("click", () => {
 //     data-settings-overlay).open === false
 // }
 
-dataListItems.addEventListener('click', (even) => {
+/* dataListItems.addEventListener('click', (even) => {
     event.preventDefault()
     const pathArray = Array.from(event.path && event.composedPath()) //change that to an and from or
     let active;
@@ -262,4 +281,4 @@ dataListItems.addEventListener('click', (even) => {
     
     data-list-subtitle === '${authors[active.author]} (${Date(active.published).year})'
     data-list-description === active.description
-})
+}) */
