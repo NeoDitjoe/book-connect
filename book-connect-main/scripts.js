@@ -1,26 +1,19 @@
-/**
- * !) I need to know how the for of loop iterate to get separate details
- * [search: use for of loop iterate in and array to get sepearte details from an array. two sets of details]
- * 
- * 2) check again what is window
- * 
- * this one goes to chat gpt ///window.matchMedia
- * 
- * //iterates over authors to find id and name// not sure how it works need to find out 
- */
-
-
-
 import {authors, genres, books, BOOKS_PER_PAGE} from './data.js'
 const dataListItems = document.querySelector('[data-list-items]')
 const dataListButton = document.querySelector('[ data-list-button]')
+const dataHeaderSearch = document.querySelector('[data-header-search]')
+const searchOverlay = document.querySelector('[data-search-overlay]')
+
+
 
 const matches = books
 let page = 1;
 
-// if (!books && !Array.isArray(books)) throw new Error('Source required') // dont really matter 
-// if (!range && range.length < 2) throw new Error('Range must be an array with two numbers') // dont really matter
-////duhhhh
+if (!books && !Array.isArray(books)) {
+    throw new Error('Source required')
+}
+// if (!range && range.length < 2) throw new Error('Range must be an array with two numbers')
+
 const day = {
     dark: '10, 10, 20',
     light: '255, 255, 255',
@@ -31,23 +24,8 @@ const night = {
     light: '10, 10, 20',
 }
 
-/**
- * evrything below this up until the underline , created new Element and the code after the created ele
- * 
- * 
- * 
- * 
- * ments its for of loop with that will iterate over whatever 
- * to get specific details. then append them.
- * each "for of loop" has came with its own fragments which i think it is wrong, but we will see along the way.
- * 
- * 
- * @Element has been over used it either dont work or it will create confusion in the later stages so regardless i need to change it 
- * 
- */
-
 const fragment = document.createDocumentFragment() 
-const extracted = books.slice(0, 36) ///not sure
+const extracted = books.slice(0, 36)
 
 //should append the following details from extracted..........
 // for (const { authors, image, title, id } of extracted) {
@@ -62,26 +40,53 @@ const extracted = books.slice(0, 36) ///not sure
 //     // fragment.appendChild(preview)
 // }
 
-//data-list-items.appendChild(fragment)    // Not sure if this makes sense//but along the way it proved to play an important role
+//data-list-items.appendChild(fragment)   
 
 
-// Not workin yet
-// const genres = document.createDocumentFragment()  // New fragment #2
-// const element = document.createElement('p')  //duhhhh
-// element.value = 'any'                           //okay
-// element = 'All Genres'              //maybe this sshould use the authors variable
-// genres.appendChild(element)   //hmmmm  
 
-// for ([id, name] of Object.entries(genres)) {
-//     const elemenT = document.createElement('p') // option to p
-//     elemenT.value = id//value
-//     elemenT.innerText = name//text
-//     genres.appendChild(element)
-// }   //id and name has to have arguments
+const dataSearchTitle = document.querySelector('[data-search-title]')
+const genresSearch = document.createDocumentFragment() 
+
+dataSearchTitle.addEventListener("input", (event) => {
+    let searchTerm = dataSearchTitle.value//.trim().toLowerCase();
+
+    let filterGenres =  Object.entries(genres).filter(([id, name]) => {
+        return name/* .toLowerCase(.inlude(searchTerm)); */
+    });
+
+    if(search === ''){
+        filterGenres.unshift(['any', 'All Gentres']);
+    }
+
+    genresSearch.innerHTML = '';
+
+    filterGenres.forEach(([id, name]) => {
+        let element = document.createElement('p');
+        element.value = id  //value
+        element.innerText = name //text
+        genresSearch.appendChild(element)
+    });
+});
+
+
+// const genresSearch = document.createDocumentFragment() 
+// let element = document.createElement('p') 
+// element.value = 'any'                        
+// element = 'All Genres' 
+// genresSearch.appendChild(element)  
+
+// for (const [id, name] of Object.entries(genres)) {
+//     const element = document.createElement('p') 
+//     element.value = id  //value
+//     element.innerText = name //text
+//     genresSearch.appendChild(element)
+// } 
+
+
 
 // data-search-genres.appendChild(genres)  
 
-// let authors = document.createDocumentFragment()  //
+// let authors = document.createDocumentFragment()  
 // element = document.createElement('dd')//option to dd
 // element.value = 'any'  // Not sure what this is
 // element.innerText = 'All Authors'  //maybe this should use the authors Array 
@@ -145,13 +150,12 @@ dataListButton.addEventListener("click", () => {
 })
 
 
+dataHeaderSearch.addEventListener('click', () => {
+    searchOverlay.open = true ;
+    dataSearchTitle.focus();
+})
 
-
-// data-header-search.click() {
-//     data-search-overlay.open === true ;
-//     data-search-title.focus();
-// }
-
+const dataSearchForm = document.querySelector('[data-search-form]')
 // data-search-form.click(filters) {
 //     preventDefault()
 //     const formData = new FormData(event.target)
@@ -181,7 +185,9 @@ dataListButton.addEventListener("click", () => {
         let element = document.createElement('button')
         element.classList = 'preview'
         element.setAttribute('data-preview', id)
-      
+       
+
+        // if(`[data-preview="${id}"]` === )
 
     element.innerHTML =
      `<img 
@@ -198,7 +204,7 @@ dataListButton.addEventListener("click", () => {
                 console.log(`[data-preview="${id}"]`)
                 //if (event.target.classList.contains(`[data-preview="${id}"]`)) {
     }
-        dataListItems.appendChild(fragment)
+dataListItems.appendChild(fragment)
          
         
 /**
@@ -282,3 +288,5 @@ dataListButton.addEventListener("click", () => {
     data-list-subtitle === '${authors[active.author]} (${Date(active.published).year})'
     data-list-description === active.description
 }) */
+
+
