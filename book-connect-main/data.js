@@ -1,5 +1,6 @@
 export const BOOKS_PER_PAGE = 36;
 
+
 export const authors = {
   "194e164b-9365-4358-b44a-f28a93cc528f": "Steven D. Levitt",
   "76e8065c-fd7a-4a8b-a8ea-6105a47d0781": "Stephen J. Dubner",
@@ -198,7 +199,7 @@ export const books = [
     "description": "Harvard professor of symbology Robert Langdon awakens in an Italian hospital, disoriented and with no recollection of the past thirty-six hours, including the origin of the macabre object hidden in his belongings. With a relentless female assassin trailing them through Florence, he and his resourceful doctor, Sienna Brooks, are forced to flee. Embarking on a harrowing journey, they must unravel a series of codes, which are the work of a brilliant scientist whose obsession with the end of the world is matched only by his passion for one of the most influential masterpieces ever written, Dante Alighieri's The Inferno.\n\nDan Brown has raised the bar yet again, combining classical Italian art, history, and literature with cutting-edge science in this sumptuously entertaining thriller.",
     "pages": 463,
     "published": "2013-05-13T22:00:00.000Z",
-    "Nr": "63ea40f8-3619-4558-9d4f-787d217299d3"
+    "author": "63ea40f8-3619-4558-9d4f-787d217299d3"
   },
   {
     "id": "8124df32-dff5-41b2-a6e2-3d2d0c081d10",
