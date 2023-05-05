@@ -23,13 +23,14 @@ const dataSearchResults = document.querySelector("[data-search-results]")//empty
 const dataErrorMessage = document.querySelector('[class="list__message"]')// div that contain error message
 
 
-const matches = books
-let page = 1;
+const matches = books  //assigned books to new variable
+let page = 1; //assigned 1 to variable
 
-if (!books && !Array.isArray(books)) {throw new Error('Source required')}
-// if (!range && range.length < 2) throw new Error('Range Amust be an array with two numbers')
 
-const css = {
+/**
+ * this object contains the color of themes 
+ */
+const css = {  
     day : {
         dark: '10, 10, 20',
         light: '255, 255, 255',
@@ -40,6 +41,10 @@ const css = {
     }
     
 }
+
+/**
+ * Hold the select option for choosing your favourite genres then appends to the @dataSearchResults div
+ */
 const genresOption = document.createDocumentFragment() 
 let element = document.createElement('option') 
 element.value = 'any'                        
@@ -54,6 +59,9 @@ for (const [id, name] of Object.entries(genres)) {
 } 
 dataSearchGenres.appendChild(genresOption)  
 
+/**
+ * Hold the select option for choosing your favourite author then appends to the @dataSearchResults div
+ */
 const dataSearchAuthors = document.querySelector('[data-search-authors]') //to append author options
 let authorOptions = document.createDocumentFragment()  
 let elementAuthor = document.createElement('option')
@@ -69,6 +77,7 @@ for (const [id, name] of Object.entries(authors)) {
 }
 
 dataSearchAuthors.appendChild(authorOptions) 
+
 
 
 dataSearchCancel.addEventListener('click', ()=>{
