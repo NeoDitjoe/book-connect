@@ -1,27 +1,26 @@
 import {authors, genres, books, BOOKS_PER_PAGE} from './data.js'
 
-const dataListItems = document.querySelector('[data-list-items]')
-const dataListButton = document.querySelector('[ data-list-button]')
-const searchOverlay = document.querySelector('[data-search-overlay]')
-const dataSearchTitle = document.querySelector('[data-search-title]')
-const dataSearchCancel = document.querySelector('[data-search-cancel]')
-const dataSearchForm = document.querySelector('[data-search-form]')
-const dataHeaderSearch = document.querySelector('[data-header-search]')
-const dataListActive = document.querySelector('[data-list-active]')
-const dataListClose = document.querySelector('[data-list-close]')
-const dataSearchGenres = document.querySelector('[data-search-genres]')
-const dataSettingOverlay = document.querySelector('[data-settings-overlay]')
-const dataHeadersetting = document.querySelector('[ data-header-settings]')
-const dataSettingForm = document.querySelector('[data-settings-form]')
-const dataSettingsCancel = document.querySelector('[data-settings-cancel]')
-const dataListDescription = document.querySelector("[data-list-description]")
-const dataListSubtitle = document.querySelector("[data-list-subtitle]")
-const dataListTitle = document.querySelector("[data-list-title]")
-const dataListBlur = document.querySelector("[data-list-blur]")
-const dataListImage = document.querySelector("[data-list-image]")
-const dataSettingsTheme = document.querySelector("[data-settings-theme]")
-const dataSearchResults = document.querySelector("[data-search-results]")
-const dataErrorMessage = document.querySelector('[class="list__message"]')
+const dataListItems = document.querySelector('[data-list-items]')   //div the display books
+const dataListButton = document.querySelector('[ data-list-button]') //button used to show more
+const searchOverlay = document.querySelector('[data-search-overlay]') // the input to search
+const dataSearchTitle = document.querySelector('[data-search-title]') //search by title in the search from
+const dataSearchCancel = document.querySelector('[data-search-cancel]') //to close the search form 
+const dataSearchForm = document.querySelector('[data-search-form]')  // used to click the button on the form to didplay redults
+const dataHeaderSearch = document.querySelector('[data-header-search]') //search icon on the header used to pop the search form
+const dataListActive = document.querySelector('[data-list-active]') //div used to display preview 
+const dataListClose = document.querySelector('[data-list-close]') //closes the preview
+const dataSearchGenres = document.querySelector('[data-search-genres]') //select option for genres
+const dataSettingOverlay = document.querySelector('[data-settings-overlay]')//the over lay for the theme settings
+const dataSettingForm = document.querySelector('[data-settings-form]') //used as button to set the selected them
+const dataSettingsCancel = document.querySelector('[data-settings-cancel]') //cancel option from the themseetting to exit overly without changes
+const dataListDescription = document.querySelector("[data-list-description]") //holds the decription on the preview overlay
+const dataListSubtitle = document.querySelector("[data-list-subtitle]")//empty div to keep the subtitle
+const dataListTitle = document.querySelector("[data-list-title]") //emty h3 to hold title for the preview
+const dataListBlur = document.querySelector("[data-list-blur]")//setting the backround image to bluh on the preview
+const dataListImage = document.querySelector("[data-list-image]")//to display imagee on preview
+const dataSettingsTheme = document.querySelector("[data-settings-theme]")//if statement to display them
+const dataSearchResults = document.querySelector("[data-search-results]")//empty div to append the search results
+const dataErrorMessage = document.querySelector('[class="list__message"]')// div that contain error message
 
 
 const matches = books
@@ -55,7 +54,7 @@ for (const [id, name] of Object.entries(genres)) {
 } 
 dataSearchGenres.appendChild(genresOption)  
 
-const dataSearchAuthors = document.querySelector('[data-search-authors]')
+const dataSearchAuthors = document.querySelector('[data-search-authors]') //to append author options
 let authorOptions = document.createDocumentFragment()  
 let elementAuthor = document.createElement('option')
 elementAuthor.value = 'any'  
@@ -176,9 +175,9 @@ displayBooksList(dataSearchResults, filteredBooks)
    
 
 
-    document.querySelector('[data-search-form]').reset()
+    dataSearchForm.reset()  
 
-    document.querySelector("[data-backdrop]").style.display = "none";
+    document.querySelector("[data-backdrop]").style.display = "none"; //backdrop div
 
 })
 
@@ -218,10 +217,7 @@ for(const { author, image, title, id }of extractedShowMore){
     fragment.appendChild(element);
     dataListItems.appendChild(fragment);
       };
-    if(ShowMorePosition == 72){
-    console.log(ShowMorePosition)
-    dataListButton.disable = true
-    }
+ 
       
 }
 
