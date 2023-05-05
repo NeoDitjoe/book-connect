@@ -130,7 +130,7 @@ let extracted = books.slice(0, 36)
 
 dataSearchForm.addEventListener("submit", (event) => {
     event.preventDefault();
-
+    searchOverlay.open = false
     dataListItems.innerHTML = '';
     dataSearchResults.innerHTML = '';
 
