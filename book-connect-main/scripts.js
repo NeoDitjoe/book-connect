@@ -174,10 +174,10 @@ for (let i = 0; i < books.length; i++) {
 
 displayBooksList(dataSearchResults, filteredBooks)
    
-    //dataSearchResults.append(fragment)
+
 
     document.querySelector('[data-search-form]').reset()
-    // searchOverlay.style.display = "none";
+
     document.querySelector("[data-backdrop]").style.display = "none";
 
 })
