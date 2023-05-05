@@ -270,35 +270,40 @@ dataSettingOverlay.addEventListener("submit", (event) =>  {
     dataSettingOverlay.open = false;
 })
 
-dataListItems.addEventListener('click', (event) => {
+function preview(preview){
+    preview.addEventListener('click', (event) => {
     
-    dataListActive.open = true
-   
-    let pathArray = Array.from(event.path || event.composedPath()) 
-    let active = null
-    
-    for (const node of  pathArray) {
-        if (active) 
-        {break};
-        const previewId = node?.dataset?.preview
+        dataListActive.open = true
+       
+        let pathArray = Array.from(event.path || event.composedPath()) 
+        let active = null
         
-        for (const singleBook of books) {
-            if (singleBook.id === previewId ) {
-                active = singleBook
-                {break};
-            }
+        for (const node of  pathArray) {
+            if (active) 
+            {break};
+            const previewId = node?.dataset?.preview
             
-        } 
+            for (const singleBook of books) {
+                if (singleBook.id === previewId ) {
+                    active = singleBook
+                    {break};
+                }
+                
+            } 
+            
+        };
         
-    };
-    
-  
-    dataListActive.open = true
-    dataListImage.setAttribute('src', active.image);
-    dataListBlur.style.background  =` url(${active.image})`;
-    
-    dataListTitle.textContent = active.title;
-    
-    dataListSubtitle.textContent = `${authors[active.author]} (${new Date(active.published).getFullYear()})`
-    dataListDescription.textContent = active.description
-}) ;
+      
+        dataListActive.open = true
+        dataListImage.setAttribute('src', active.image);
+        dataListBlur.style.background  =` url(${active.image})`;
+        
+        dataListTitle.textContent = active.title;
+        
+        dataListSubtitle.textContent = `${authors[active.author]} (${new Date(active.published).getFullYear()})`
+        dataListDescription.textContent = active.description
+    }) ;
+}
+
+preview(dataListItems)
+preview(dataSearchResults)
