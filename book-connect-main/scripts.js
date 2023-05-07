@@ -111,7 +111,7 @@ dataListClose.addEventListener('click',() => {
     dataListActive.open = false
  });
 
-
+  
 
 /**
  * added a event listener, so when button is clicked the search form overlay appears.
