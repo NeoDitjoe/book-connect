@@ -30,7 +30,6 @@ const dataHeaderSetting =document.querySelector('[data-header-settings]')
 
 
 
-const matches = books  //assigned books to new variable
 let page = 1; //assigned 1 to variable
 
 
@@ -45,16 +44,55 @@ const css = {
     night : {
         dark: '255, 255, 255',
         light: '10, 10, 20',
-    }
-    
+    } 
 }
+
+const fragment = document.createDocumentFragment() // used to append multiple info at once
+
+/**
+ * assigned books to variable so that the first 36 books can appear using slice.
+ * The function was created with parameters because the code inside the fuction is 
+ * used again in further stages, but with different arguements when the fuction is being called.
+ * 
+ * for of loop is then used to get specific info out of extrecte/book then display that into on the DOM by
+ * appending it the to html using the arguement. all the extracted detail is the turned to functions so that 
+ * the could be clicked to display the book's details. used set attribute to give each button its own space so that
+ * when book is clicked it display the info of the clicked element
+ */
+
+let extracted = books.slice(0, 36)
+
+  function displayBooksList(DomAppend, bookList){
+    for(const { author, image, title, id } of bookList){
+    let element = document.createElement('button');
+    element.classList = 'preview';
+    element.setAttribute('data-preview', id);
+
+    element.innerHTML =
+     `<img 
+        class="preview__image" 
+        src="${image}"
+        />
+        <div class="preview__info">
+            <h3 class="preview__title">${title}</h3>
+            <div class="preview__author">${authors[author]}</div>
+        </div>
+        `;
+    fragment.appendChild(element);
+    DomAppend.appendChild(fragment);
+    
+      };}
+      
+    displayBooksList(dataListItems, extracted)
+
+
 
 /**
  * Hold the select option for choosing your favourite genres.
  * created a fragment that that will be used to append a created element into the fragment then the fragment will be appended to the select elemnt that is on the HTML
  */
 const genresOption = document.createDocumentFragment() 
-let element = document.createElement('option') 
+const element = document.createElement('option') 
 element.value = 'any'                        
 element.innerHTML = 'All Genres' 
 genresOption.appendChild(element)  
@@ -123,44 +161,6 @@ dataHeaderSearch.addEventListener('click', () =>{
     dataSearchTitle.focus()
 });
 
-
-const fragment = document.createDocumentFragment() // used to append multiple info at once
-
-/**
- * assigned books to variable so that the first 36 books can appear using slice.
- * The function was created with parameters because the code inside the fuction is 
- * used again in further stages, but with different arguements when the fuction is being called.
- * 
- * for of loop is then used to get specific info out of extrecte/book then display that into on the DOM by
- * appending it the to html using the arguement. all the extracted detail is the turned to functions so that 
- * the could be clicked to display the book's details. used set attribute to give each button its own space so that
- * when book is clicked it display the info of the clicked element
- */
-
-let extracted = books.slice(0, 36)
-
-  function displayBooksList(DomAppend, extract){
-    for(const { author, image, title, id }of extract){
-    let element = document.createElement('button');
-    element.classList = 'preview';
-    element.setAttribute('data-preview', id);
-
-    element.innerHTML =
-     `<img 
-        class="preview__image" 
-        src="${image}"
-        />
-        <div class="preview__info">
-            <h3 class="preview__title">${title}</h3>
-            <div class="preview__author">${authors[author]}</div>
-        </div>
-        `;
-    fragment.appendChild(element);
-    DomAppend.appendChild(fragment);
-    
-      };}
-    displayBooksList(dataListItems, extracted)
-
 /**
  * This function is used to search the details of what the user searches.
  * used empty innerHTML so that when the search result appear(which is a new div) 
@@ -177,6 +177,7 @@ let extracted = books.slice(0, 36)
  * 
  */
 
+
 dataSearchForm.addEventListener("submit", (event) => {
     event.preventDefault();
     searchOverlay.open = false
@@ -184,42 +185,31 @@ dataSearchForm.addEventListener("submit", (event) => {
     dataSearchResults.innerHTML = '';
 
 
-const formData = new FormData(event.target)
-const title = formData.get('title');
-const genre = formData.get('genre');
-const author = formData.get('author');
+// const formData = new FormData(event.target)
+// const title = formData.get('title');
+// const genre = formData.get('genre');
+// const author = formData.get('author');
 
 
-const filteredBooks = [];
-for (let i = 0; i < books.length; i++) {
-  const book = books[i];
-  if (genre === 'any' && author === 'any') {
-   if (book.title.toLowerCase().includes(title.toLowerCase())){
-    filteredBooks.push(book);
+
+const filteredBooks = books.filter((book) => {
+  if (genre !== 'any' &&  book.genres.indexOf(genre) === -1) {
+        return false
    }
+   if (author !== 'any' && book.author !== author) {
+      return false;
   }
-  if (genre === 'any') {
-    if (book.title.toLowerCase().includes(title.toLowerCase()) && book.author === author){
-     filteredBooks.push(book);
-    }
-   }
-   if (title === '') {
-    if (book.author === author && book.genres.includes(genre)){
-     filteredBooks.push(book);
-    }
-   }
-   if (title === '' && author === 'any' ) {
-    if (book.genres.includes(genre)){
-     filteredBooks.push(book);
-    }
-   }
-   if(filteredBooks.length > 0 ){
-    dataErrorMessage.style.display = 'none'
-    
-}else{
-    dataErrorMessage.style.display = 'block'
-}
-}
+  if (title !== '' && !book.title.toLowerCase().includes(title.toLowerCase())) {
+      return false;
+  }
+      return true;
+  });
+
+  if (filteredBooks.length > 0) {
+    dataErrorMessage.style.display = 'none';
+  } else {
+    dataErrorMessage.style.display = 'block';
+  }
 
 displayBooksList(dataSearchResults, filteredBooks)
    
@@ -229,7 +219,7 @@ displayBooksList(dataSearchResults, filteredBooks)
 
     document.querySelector("[data-backdrop]").style.display = "none"; //backdrop div
 
-})
+});
 
 
 /**
@@ -251,36 +241,9 @@ let ShowMore = 36
 dataListButton.addEventListener("click", () => {
     ShowMorePosition += ShowMore ;
     let extractedShowMore = books.slice(ShowMorePosition, ShowMorePosition + ShowMore);
-    displayBooks(extractedShowMore)
+
+     displayBooksList(dataListItems, extractedShowMore)
 });
-
-
-
-function displayBooks(extractedShowMore){
-    fragment.innerHTML = '';
-
-    
-for(const { author, image, title, id }of extractedShowMore){
-    let element = document.createElement('button');
-    element.classList = 'preview';
-    element.setAttribute('data-preview', id);
-
-    element.innerHTML =
-     `<img 
-        class="preview__image" 
-        src="${image}"
-        />
-        <div class="preview__info">
-            <h3 class="preview__title">${title}</h3>
-            <div class="preview__author">${authors[author]}</div>
-        </div>
-        `  
-    fragment.appendChild(element);
-    dataListItems.appendChild(fragment);
-      };
- 
-      
-}
 
 
 /**
@@ -288,11 +251,11 @@ for(const { author, image, title, id }of extractedShowMore){
 * The code creates a "Show more" button that displays the remaining number of books that can be shown. 
 * Here's an explanation of how the code works:
 */
-
+;
 
 dataListButton.innerHTML = /* html */ [
     `<span>Show more</span>
-    <span class="list__remaining"> (${matches.length - [page * BOOKS_PER_PAGE] > 0 ? matches.length - [page * BOOKS_PER_PAGE] : 0})</span>`,
+    <span class="list__remaining"> (${books.length - [page * BOOKS_PER_PAGE] > 0 ? books.length - [page * BOOKS_PER_PAGE] : 0})</span>`,
 ]
 
 /**
@@ -301,8 +264,8 @@ dataListButton.innerHTML = /* html */ [
 *  Finally, the code sets the color properties of the page based on whether the user's system is set to a dark or light color scheme.
 */
 
-dataSettingsTheme.value = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'night' : 'day';
-const visual = window.matchMedia('(prefers-color-scheme: dark)').matches? 'night' : 'day';
+dataSettingsTheme.value = window.matchMedia('(prefers-color-scheme: dark)').books ? 'night' : 'day';
+const visual = window.matchMedia('(prefers-color-scheme: dark)').books? 'night' : 'day';
 
 if(dataSettingsTheme.value === 'night'){
     document.documentElement.style.setProperty('--color-dark', css['night'].dark);
