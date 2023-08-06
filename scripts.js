@@ -185,10 +185,10 @@ dataSearchForm.addEventListener("submit", (event) => {
     dataSearchResults.innerHTML = '';
 
 
-// const formData = new FormData(event.target)
-// const title = formData.get('title');
-// const genre = formData.get('genre');
-// const author = formData.get('author');
+const formData = new FormData(event.target)
+const title = formData.get('title');
+const genre = formData.get('genre');
+const author = formData.get('author');
 
 
 
